@@ -1,35 +1,14 @@
-Error starting the server: Error: listen EACCES: permission denied 0.0.0.0:80
-    at Server.setupListenHandle [as _listen2] (node:net:1800:21)
-    at listenInCluster (node:net:1865:12)
-    at Server.listen (node:net:1953:7)
-    at Function.listen (/home/ubuntu/server/node_modules/express/lib/application.js:635:24)
-    at Object.<anonymous> (/home/ubuntu/server/index.js:9:5)
-    at Module._compile (node:internal/modules/cjs/loader:1364:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
-    at Module.load (node:internal/modules/cjs/loader:1203:32)
-    at Module._load (node:internal/modules/cjs/loader:1019:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12) {
-  code: 'EACCES',
-  errno: -13,
-  syscall: 'listen',
-  address: '0.0.0.0',
-  port: 80
+node:internal/modules/cjs/loader:1143
+  throw err;
+  ^
+
+Error: Cannot find module '/home/ubuntu/server/wargame/app.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1140:15)
+    at Module._load (node:internal/modules/cjs/loader:981:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)
+    at node:internal/main/run_main_module:28:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
 }
-Error starting the server: Error: listen EACCES: permission denied 0.0.0.0:80
-    at Server.setupListenHandle [as _listen2] (node:net:1800:21)
-    at listenInCluster (node:net:1865:12)
-    at Server.listen (node:net:1953:7)
-    at Function.listen (/home/ubuntu/server/node_modules/express/lib/application.js:635:24)
-    at Object.<anonymous> (/home/ubuntu/server/index.js:9:5)
-    at Module._compile (node:internal/modules/cjs/loader:1364:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
-    at Module.load (node:internal/modules/cjs/loader:1203:32)
-    at Module._load (node:internal/modules/cjs/loader:1019:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12) {
-  code: 'EACCES',
-  errno: -13,
-  syscall: 'listen',
-  address: '0.0.0.0',
-  port: 80
-}
-Server is running on http://localhost:80
+
+Node.js v18.20.4
