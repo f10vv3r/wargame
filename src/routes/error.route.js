@@ -1,8 +1,8 @@
 const express = require("express");
-const renderFile = require("../controllers/error.controller.js");
+const errorController = require("../controllers/error.controller.js");
 
 const router = express.Router();
 
-router.get("/", renderFile);
+router.get("/", errorController.renderErrorPage);
 
 module.exports = router;

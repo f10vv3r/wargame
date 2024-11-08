@@ -1,8 +1,8 @@
 const express = require("express");
-const renderFile = require("../controllers/index.controller.js");
+const indexController = require("../controllers/index.controller.js");
 
 const router = express.Router();
 
-router.get("/", renderFile);
+router.get("/", indexController.renderIndexPage);
 
 module.exports = router;
