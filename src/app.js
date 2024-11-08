@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require('path');
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
@@ -18,8 +20,10 @@ const errorRouter = require("./routes/error.route.js");
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../public/views'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.SECRET_key));
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use("/", indexRouter);
@@ -32,7 +36,6 @@ app.use("/error", errorRouter);
 
 app.listen(port, (err) => {
   if (err) return console.log(err);
-
-  console.log(`server running success`,);
+  console.log(`server running success`);
 });
 

@@ -34,7 +34,7 @@ exports.loginUser = (userData, callback) => {
     });
 };
 
-exports.classCheck = async(userData, callback) => {
+exports.classCheck = async(userData) => {
     const class_query = 'SELECT class FROM users WHERE id = ?;';
 
     const userClass = await conn.promise().query(class_query, [userData.id]);

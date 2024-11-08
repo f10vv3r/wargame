@@ -18,7 +18,7 @@ exports.handleLogin = async (req, res) => {
 
         const userClass = await LoginModel.classCheck({id});
 
-        const token = jwt.sign({ id: `${id}`, class : userClass }, SECRET_key);
+        const token = jwt.sign({ id: `${id}`, class: userClass }, SECRET_key, { algorithm: "HS256" });
         res.cookie("session", `${token}`)
         res.send(`<script>alert("Login Success"); window.location.href = '/wargame';</script>`);
     
