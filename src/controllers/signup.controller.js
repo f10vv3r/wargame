@@ -10,18 +10,9 @@ exports.handleSignup = async (req, res) => {
     SignupModel.signupUser({ id, pw, email }, (err, results) => {
         if (err) {
             console.error(err);
-            return res.send(`<script>alert("회원가입 실패"); window.location.href = '/signup';</script>`);
+            return res.send(`<script>alert("Invalid ID/PW/E-mail"); window.location.href = '/signup';</script>`);
         }
 
-        SignupModel.closeConnection((closeErr, message) => {
-            if (closeErr) {
-                console.error(closeErr);
-            } 
-            else {
-                console.log(message); 
-            }
-        });
-
-        res.send(`<script>alert("회원가입 성공!"); window.location.href = '/signup';</script>`);
+        res.send(`<script>alert("Signup Success"); window.location.href = '/signup';</script>`);
     });
 };

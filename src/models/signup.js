@@ -19,7 +19,7 @@ conn.connect((err) => {
         console.error('Database connection failed: ', err);
         return;
     }
-    console.log('Connected to the DB');
+    console.log('Connected to the Signup DB');
 });
 
 
@@ -33,13 +33,3 @@ exports.signupUser = (userData, callback) => {
         callback(null, results);
     });
 };
-
-exports.closeConnection = (callback) => {
-    conn.end((err) => {
-        if (err) {
-            return callback(err);
-        }
-        callback(null, "DB connection closed");
-    });
-};
-

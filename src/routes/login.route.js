@@ -1,9 +1,10 @@
 const express = require("express");
-const renderFile = require("../controllers/login.controller.js");
+const loginController = require("../controllers/login.controller.js");
 
 const router = express.Router();
 
-router.get("/", renderFile);
-router.post("/", renderFile);
+router.get("/", loginController.renderLoginPage);
+
+router.post("/", loginController.handleLogin);
 
 module.exports = router;
