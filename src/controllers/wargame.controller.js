@@ -1,5 +1,8 @@
-const path = require("path");
 
-module.exports = (req, res, next) => {
+exports.renderWargamePage = (req, res) => {
     res.render("wargame");
+};
+
+exports.handleWargame = async (req, res) => {
+
 };

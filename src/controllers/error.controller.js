@@ -1,5 +1,5 @@
 const path = require("path");
 
-module.exports = (req, res, next) => {
+exports.renderErrorPage = (req, res) => {
     res.render("error");
 };

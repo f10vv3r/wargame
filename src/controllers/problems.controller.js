@@ -1,5 +1,5 @@
 const path = require("path");
 
-module.exports = (req, res, next) => {
+exports.renderProblemsPage = (req, res) => {
     res.render("problems");
 };

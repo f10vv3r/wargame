@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const SECRET_key = process.env.SECRET_key;
 
-exports.renderLoginPage = (req, res, next) => {
+exports.renderLoginPage = (req, res) => {
     res.render("login");
 };
 

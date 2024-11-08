@@ -1,5 +1,5 @@
 const path = require("path");
 
-module.exports = (req, res, next) => {
+exports.renderIndexPage = (req, res) => {
     res.render("index");
 };
