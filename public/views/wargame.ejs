@@ -58,6 +58,24 @@
             text-decoration: none; /* 링크 장식 제거 */
             font-size: 24px; /* 브랜드 텍스트 크기 */
         }
+        .container {
+            display: flex;
+            justify-content: center;  /* 수평 가운데 정렬 */
+            align-items: center;      /* 수직 가운데 정렬 */
+            border: 1px solid #000;
+        }
+        /* 버튼 크기만 키우는 부분 */
+        .container button {
+            padding: 20px 40px; /* 버튼 크기 키우기 */
+            font-size: 22px; /* 글자 크기 키우기 */
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #555;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -82,9 +100,9 @@
             </button>
             <div class="dropdown-content">
                 <a href="/user">Users</a>
-                <a href="/wargame">Wargame</a>
+                <a href="/wargame/upload">Upload</a>
 
-                <a href="/login">Login</a>
+                <a href="/login">Logout</a>
                 <a href="/signup">Signup</a>
             </div>
         </div>
@@ -94,7 +112,14 @@
     <br>
     <br>
 
-    <h1>wargame page</h1>
+   
+        <% for (var i = 0; i < 10; i++){ %>
+            <div class="container">
+                <button>1</button>
+            
+        <% } %>
+                </div>
+    
 
 </body>
-</html> 
+</html>

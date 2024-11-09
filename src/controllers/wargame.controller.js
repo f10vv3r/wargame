@@ -6,8 +6,7 @@ exports.renderWargamePage = async (req, res) => {
 
     try {
         const token = req.cookies.session;
-        const verified = jwt.verify(token, SECRET_key);
-        console.log(verified);
+        jwt.verify(token, SECRET_key);
 
         res.render("wargame");
     } catch (error) {
