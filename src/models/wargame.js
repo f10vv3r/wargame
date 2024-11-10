@@ -12,3 +12,14 @@ const conn = mysql.createConnection({
     password: pass,
     database: "wargame",
 });
+
+exports.countProblem = (callback) => {
+    const count_query = 'SELECT COUNT(*) FROM problems;';
+
+    conn.query(count_query, (err, results) => {
+        if (err) {
+            return callback(err); 
+        }
+        callback(null, results[0]['COUNT(*)']);
+    });
+};

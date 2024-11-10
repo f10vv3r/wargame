@@ -26,7 +26,7 @@ conn.connect((err) => {
 exports.signupUser = (userData, callback) => {
     const signup_query = 'INSERT INTO users (id, pw, email, class, flag) VALUES (?, ?, ?, 0, NULL);';
 
-    conn.query(signup_query, [userData.id, md5(userData.pw), userData.email], (err, results) => {
+    conn.query(signup_query, [userData.id, md5(userData.pw), md5(userData.email)], (err, results) => {
         if (err) {
             return callback(err); 
         }
