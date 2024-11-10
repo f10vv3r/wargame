@@ -33,7 +33,6 @@ exports.classCheck = async (userData) => {
 
     try {
         const [userClassResult] = await conn.query(class_query, [userData.id]); 
-
         const userClass = userClassResult[0].class; 
 
         return userClass;

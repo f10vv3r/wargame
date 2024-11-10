@@ -19,7 +19,6 @@ exports.infoProblem = async () => {
     const content_query = 'SELECT * FROM problems;';
 
     try {
-
         const [countResults] = await conn.query(count_query); 
         const [contentResults] = await conn.query(content_query);
 
@@ -27,6 +26,7 @@ exports.infoProblem = async () => {
         const content = contentResults; 
 
         return { count, content }; 
+
     } catch (err) {
         console.error("Error fetching problem info:", err);
         throw err;  

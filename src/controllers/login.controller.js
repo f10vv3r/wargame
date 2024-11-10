@@ -15,9 +15,7 @@ exports.handleLogin = async (req, res) => {
         const userClass = await LoginModel.classCheck({ id });
         
         console.log(user);
-        console.log(user.id);
-        console.log(userClass);
-
+        
         const token = jwt.sign({ id: user.id, class: userClass }, SECRET_key, { algorithm: "HS256" });
 
         res.cookie("session", token, { httpOnly: true, secure: false, sameSite: 'Strict' });
