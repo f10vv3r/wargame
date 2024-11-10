@@ -10,17 +10,22 @@ exports.renderLoginPage = (req, res) => {
 exports.handleLogin = async (req, res) => {
     const { id, pw } = req.body;
 
-    LoginModel.loginUser({ id, pw }, async (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.send(`<script>alert("Invalid ID/PW"); window.location.href = '/login';</script>`);
-        };
+    try {
+        const user = await LoginModel.loginUser({ id, pw });
+        const userClass = await LoginModel.classCheck({ id });
+        
+        console.log(user);
+        console.log(user.id);
+        console.log(userClass);
 
-        const userClass = await LoginModel.classCheck({id});
+        const token = jwt.sign({ id: user.id, class: userClass }, SECRET_key, { algorithm: "HS256" });
 
-        const token = jwt.sign({ id: `${id}`, class: userClass }, SECRET_key, { algorithm: "HS256" });
-        res.cookie("session", `${token}`)
+        res.cookie("session", token, { httpOnly: true, secure: false, sameSite: 'Strict' });
+
         res.send(`<script>alert("Login Success"); window.location.href = '/wargame';</script>`);
-    
-    });
+    } catch (err) {
+        console.error(err);
+        return res.send(`<script>alert("Invalid ID/PW"); window.location.href = '/login';</script>`);
+    }
+
 };

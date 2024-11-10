@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise"); 
 const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
@@ -6,7 +6,7 @@ require("dotenv").config({ path: __dirname + "/config/.env" });
 const user = process.env.MySQL_user;
 const pass = process.env.MySQL_pass;
 
-const conn = mysql.createConnection({
+const conn = mysql.createPool({
     host: "localhost",
     port: 3306,
     user: user,
@@ -14,29 +14,32 @@ const conn = mysql.createConnection({
     database: "wargame",
 });
 
-conn.connect((err) => {
-    if (err) {
-        console.error('Database connection failed: ', err);
-        return;
-    }
-    console.log('Connected to the Login DB');
-});
-
-
-exports.loginUser = (userData, callback) => {
+exports.loginUser = async (userData) => {
     const login_query = 'SELECT * FROM users WHERE id = ? AND pw = ?;';
+    
+    try {
+        const [userResult] = await conn.query(login_query, [userData.id, md5(userData.pw)]);
+        const user = userResult[0];
 
-    conn.query(login_query, [userData.id, md5(userData.pw)], (err, results) => {
-        if (err) {
-            return callback(err); 
-        }
-        callback(null, results);
-    });
+        return user; 
+    } catch (err) {
+        console.error("Error fetching login result:", err);
+        throw err;
+    }
 };
 
-exports.classCheck = async(userData) => {
+exports.classCheck = async (userData) => {
     const class_query = 'SELECT class FROM users WHERE id = ?;';
 
-    const userClass = await conn.promise().query(class_query, [userData.id]);
-    return userClass[0][0].class;
+    try {
+        const [userClassResult] = await conn.query(class_query, [userData.id]); 
+
+        const userClass = userClassResult[0].class; 
+
+        return userClass;
+
+    } catch (err) {
+        console.error("Error fetching class check:", err);
+        throw err; 
+    }
 };

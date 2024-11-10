@@ -7,16 +7,16 @@ exports.renderWargamePage = async (req, res) => {
 
     try {
         const token = req.cookies.session;
+        console.log(token);
         jwt.verify(token, SECRET_key);
 
-        WargameModel.countProblem((err, count) => {
-            if (err) {
-                return res.render("error");
-            }
-    
-            console.log('problem:', count);
-            res.render("wargame", { 'posts': count }); 
-        });
+
+        const { count, content } = await WargameModel.infoProblem();
+
+        console.log(count);
+        console.log(content);
+
+        res.render("wargame", { 'posts': {count, content} }); 
 
     } catch (error) {
         console.error("JWT verification failed:", error);  

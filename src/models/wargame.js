@@ -1,11 +1,12 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise"); 
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
 const user = process.env.MySQL_user;
 const pass = process.env.MySQL_pass;
 
-const conn = mysql.createConnection({
+
+const conn = mysql.createPool({
     host: "localhost",
     port: 3306,
     user: user,
@@ -13,13 +14,21 @@ const conn = mysql.createConnection({
     database: "wargame",
 });
 
-exports.countProblem = (callback) => {
-    const count_query = 'SELECT COUNT(*) FROM problems;';
+exports.infoProblem = async () => {
+    const count_query = 'SELECT COUNT(*) AS count FROM problems;';
+    const content_query = 'SELECT * FROM problems;';
 
-    conn.query(count_query, (err, results) => {
-        if (err) {
-            return callback(err); 
-        }
-        callback(null, results[0]['COUNT(*)']);
-    });
+    try {
+
+        const [countResults] = await conn.query(count_query); 
+        const [contentResults] = await conn.query(content_query);
+
+        const count = countResults[0].count;  
+        const content = contentResults; 
+
+        return { count, content }; 
+    } catch (err) {
+        console.error("Error fetching problem info:", err);
+        throw err;  
+    }
 };
