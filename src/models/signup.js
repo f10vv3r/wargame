@@ -1,4 +1,4 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
@@ -6,7 +6,7 @@ require("dotenv").config({ path: __dirname + "/config/.env" });
 const user = process.env.MySQL_user;
 const pass = process.env.MySQL_pass;
 
-const conn = mysql.createConnection({
+const conn = mysql.createPool({
     host: "localhost",
     port: 3306,
     user: user,
@@ -14,22 +14,20 @@ const conn = mysql.createConnection({
     database: "wargame",
 });
 
-conn.connect((err) => {
-    if (err) {
-        console.error('Database connection failed: ', err);
-        return;
-    }
-    console.log('Connected to the Signup DB');
-});
-
-
-exports.signupUser = (userData, callback) => {
+exports.signupUser = async (userData) => {
     const signup_query = 'INSERT INTO users (id, pw, email, class, flag) VALUES (?, ?, ?, 0, NULL);';
 
-    conn.query(signup_query, [userData.id, md5(userData.pw), md5(userData.email)], (err, results) => {
-        if (err) {
-            return callback(err); 
-        }
-        callback(null, results);
-    });
+    try {
+     
+        const hashedPassword = md5(userData.pw);
+        const hashedEmail = md5(userData.email); 
+
+        const [results] = await conn.query(signup_query, [userData.id, hashedPassword, hashedEmail]);
+
+        return results;  
+
+    } catch (err) {
+        console.error("Error signing up user:", err);
+        throw err;  
+    }
 };

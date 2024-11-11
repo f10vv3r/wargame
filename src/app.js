@@ -10,6 +10,7 @@ const app = express();
 const port = process.env.PORT;
 
 const indexRouter = require("./routes/index.route.js");
+//const loginRouter = require("./routes/logout.route.js");
 const loginRouter = require("./routes/login.route.js");
 const singupRouter = require("./routes/singup.route.js");
 const userRouter = require("./routes/user.route.js");
