@@ -16,8 +16,18 @@ exports.handleSignup = async (req, res) => {
         return res.send(`<script>alert("Please enter a valid email address."); window.location.href = '/signup';</script>`);
     }
 
+    const idRegex = /^[a-zA-Z][a-zA-Z0-9_-]{3,19}$/;
+    if (!idRegex.test(id)) {
+        return res.send(`<script>alert("ID must be 4-20 characters long and can only contain letters, numbers, underscores, and hyphens, and must start with a letter."); window.location.href = '/signup';</script>`);
+    }
+
+    const pwRegex = /^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (!pwRegex.test(pw)) {
+        return res.send(`<script>alert("Password must be at least 8 characters long, and include one number and one special character."); window.location.href = '/signup';</script>`);
+    }
+
     try {
-        const results = await SignupModel.signupUser({ id, pw, email });
+        await SignupModel.signupUser({ id, pw, email });
 
         res.send(`<script>alert("Signup successful! Please log in."); window.location.href = '/login';</script>`);
     } catch (err) {
