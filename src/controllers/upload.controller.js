@@ -8,7 +8,6 @@ exports.renderUploadPage = (req, res) => {
     try {
         const token = req.cookies.session;
         const verified = jwt.verify(token, SECRET_key);
-        console.log(verified);
 
         res.render("upload");
     } catch (error) {
