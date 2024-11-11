@@ -15,8 +15,8 @@ const conn = mysql.createPool({
 });
 
 exports.uploadProblem = (problemData, callback) => {
-    const upload_query = 'INSERT INTO problems (usr_idx, title, text, flag) VALUES (?, ?, ?, ?);';
-    conn.query(upload_query, [problemData.usrIdx.usr_idx ,problemData.title, problemData.text, md5(problemData.flag)], (err, results) => {
+    const upload_query = 'INSERT INTO problems (usr_idx, title, text, category, flag) VALUES (?, ?, ?, ?, ?);';
+    conn.query(upload_query, [problemData.usrIdx.usr_idx ,problemData.title, problemData.text, problemData.category, md5(problemData.flag)], (err, results) => {
         if (err) {
             return callback(err); 
         }

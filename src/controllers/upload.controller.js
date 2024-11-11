@@ -7,7 +7,7 @@ exports.renderUploadPage = (req, res) => {
     
     try {
         const token = req.cookies.session;
-        const verified = jwt.verify(token, SECRET_key);
+        jwt.verify(token, SECRET_key);
 
         res.render("upload");
     } catch (error) {
@@ -18,14 +18,14 @@ exports.renderUploadPage = (req, res) => {
 };
 
 exports.handleUpload = async (req, res) => {
-    const { title, text, flag } = req.body;
-
+    const { title, text, flag, category } = req.body;
+    console.log(req.body.value);
     try{
         const token = req.cookies.session;
         const verified = jwt.verify(token, SECRET_key);
 
         const usrIdx = await UploadModel.whatUsrIdx(verified.id);
-        await UploadModel.uploadProblem({usrIdx, title, text, flag});
+        await UploadModel.uploadProblem({usrIdx, title, text, category, flag});
 
         res.send(`<script>alert("upload success"); window.location.href = '/wargame';</script>`);
     } catch (error) {

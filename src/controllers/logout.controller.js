@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 exports.userLogout = async (req, res) => {
     try {
         res.clearCookie("session", { httpOnly: true, secure: false, sameSite: 'Strict' });
