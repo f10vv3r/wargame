@@ -83,8 +83,10 @@
             <div class="dropdown-content">
                 <a href="/user">Users</a>
                 <a href="/wargame">Wargame</a>
+                <a href="/wargame/upload">Upload</a><br>
 
                 <a href="/login">Login</a>
+                <a href="/logout">Logout</a>
                 <a href="/signup">Signup</a>
             </div>
         </div>
@@ -93,7 +95,13 @@
     <br>
     <br>
     <br>
-    <h1>problem Page</h1>
+
+<h1><%= posts.problemContent.title %></h1>
+<h1><%= posts.problemContent.text %></h1>
+<h1><%= posts.userId.id %></h1>
+<h1><%= new Date(posts.problemContent.pro_time).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) %></h1>
+<h2><%= new Date(posts.problemContent.pro_time).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }) %></h2>
+
     
 
 </body>

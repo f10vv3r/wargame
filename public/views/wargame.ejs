@@ -41,7 +41,6 @@
         }
         .dropdown-content a:hover {
             background-color: #3a3a3a; /* 호버 시 배경색 변경 */
-            
         }
         .dropdown.active .dropdown-content {
             display: flex; /* 드롭다운 표시 */
@@ -58,24 +57,38 @@
             text-decoration: none; /* 링크 장식 제거 */
             font-size: 24px; /* 브랜드 텍스트 크기 */
         }
+
+        /* 버튼을 좌측 정렬하는 container */
         .container {
             display: flex;
-            justify-content: center;  /* 수평 가운데 정렬 */
-            align-items: center;      /* 수직 가운데 정렬 */
+            flex-wrap: wrap;  /* 항목들이 여러 줄로 감싸지게 설정 */
+            justify-content: flex-start; /* 좌측 정렬 */
+            align-items: flex-start; /* 상단 정렬 */
             border: 1px solid #000;
+            margin-bottom: 20px; /* 각 그룹 간 여백 */
         }
-        /* 버튼 크기만 키우는 부분 */
+
+        /* 버튼 스타일 */
         .container button {
-            padding: 20px 40px; /* 버튼 크기 키우기 */
-            font-size: 22px; /* 글자 크기 키우기 */
+            width: 140px;  /* 고정된 너비 */
+            height: 100px; /* 고정된 높이 */
+            font-size: 22px; /* 글자 크기 고정 */
             background-color: #444;
             color: white;
             border: none;
             cursor: pointer;
+            display: flex; /* 수직, 수평 가운데 정렬 */
+            justify-content: center;
+            align-items: center;
+            text-align: center; /* 버튼 내 텍스트 가운데 정렬 */
+            margin-right: 10px; /* 버튼 간의 간격 추가 */
+            margin-bottom: 10px; /* 버튼 간의 아래쪽 간격 */
         }
+
         .container button:hover {
             background-color: #555;
         }
+
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -100,9 +113,11 @@
             </button>
             <div class="dropdown-content">
                 <a href="/user">Users</a>
-                <a href="/wargame/upload">Upload</a>
+                <a href="/wargame">Wargame</a>
+                <a href="/wargame/upload">Upload</a><br>
 
-                <a href="/login">Logout</a>
+                <a href="/login">Login</a>
+                <a href="/logout">Logout</a>
                 <a href="/signup">Signup</a>
             </div>
         </div>
@@ -112,14 +127,26 @@
     <br>
     <br>
 
-   
-        <% for (var i = 0; i < 10; i++){ %>
-            <div class="container">
-                <button>1</button>
-            
+    <% var count = posts.count; %>
+    <% for (var i = 0; i < count; i++) { %>
+        <% if (i % 5 === 0 && i !== 0) { %> 
+            </div>
         <% } %>
-                </div>
     
-
+        <% if (i % 5 === 0) { %> 
+            <div class="container">
+        <% } %>
+    
+        <ul>
+            <button onclick="location.href='/wargame/problem?page=<%= posts.content[i].pro_idx %>'">
+                <%= posts.content[i].title %>
+            </button>
+        </ul>
+    
+    <% } %>
+    
+    <% if (count % 5 !== 0) { %> 
+        </div> 
+    <% } %>
 </body>
 </html>
