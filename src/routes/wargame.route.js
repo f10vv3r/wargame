@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get("/", wargameController.renderWargamePage);
 router.get("/problem", problemController.renderProblemPage);
+
 router.get("/upload", uploadController.renderUploadPage);
+router.post("/upload", uploadController.handleUpload);
 
 module.exports = router;
