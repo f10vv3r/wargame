@@ -10,8 +10,8 @@ const app = express();
 const port = process.env.PORT;
 
 const indexRouter = require("./routes/index.route.js");
-//const loginRouter = require("./routes/logout.route.js");
 const loginRouter = require("./routes/login.route.js");
+const logoutRouter = require("./routes/logout.route.js");
 const singupRouter = require("./routes/singup.route.js");
 const userRouter = require("./routes/user.route.js");
 const adminRouter = require("./routes/admin.route.js");
@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
+app.use("/logout", logoutRouter);
 app.use("/signup", singupRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
