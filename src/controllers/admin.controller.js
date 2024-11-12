@@ -12,12 +12,12 @@ exports.renderAdminPage = (req, res) => {
         if (verified.class === 1){
             res.render("admin");
         } else {
-            return res.status(404).render("error");
+            return res.send(`<script>alert("Warning: You do not have permission to access this page"); window.location.href = '/';</script>`);
         }
 
     } catch (error) {
         console.error("JWT verification failed:", error);  
-        return res.status(404).render("error");
+        return res.send(`<script>alert("Invalid Token. Please Login again."); window.location.href = '/';</script>`);
     }
 
 };
