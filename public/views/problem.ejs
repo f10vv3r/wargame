@@ -6,22 +6,25 @@
     <meta charset="utf-8">
     <style id="theme-color">
         body {
-            background-color: #121212;
+            background-color: #121212;  /* 기본 배경색을 어두운 무채색으로 설정 */
             color: white;
             margin: 0;
             font-family: Arial, sans-serif;
         }
+
         h1 {
             text-align: center;
             color: white;
             font-size: 36px;
             margin-bottom: 20px;
         }
+
         h2 {
             color: #888;
             font-size: 20px;
             margin-top: 5px;
         }
+
         nav {
             display: flex;
             justify-content: space-between;
@@ -29,6 +32,43 @@
             background-color: #222;
             position: relative;
         }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #f5f5f5;
+            transition: background-color 0.3s, border-color 0.3s;
+            height: 48px; /* 높이를 명시적으로 설정 */
+            box-sizing: border-box; /* 패딩과 테두리가 요소의 크기에 포함되도록 */
+        }
+
+        input[type="text"]:focus {
+            background-color: #444;
+            border-color: #f5f5f5;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 48px; /* 버튼 높이를 input과 맞추기 */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #aaa;
+        }
+
         .dropdown-content {
             display: none;
             flex-direction: column;
@@ -41,6 +81,7 @@
             transform: translate(-50%, 10px);
             z-index: 1;
         }
+
         .dropdown-content a {
             color: white;
             padding: 12px 16px;
@@ -48,12 +89,15 @@
             display: block;
             width: 100%;
         }
+
         .dropdown-content a:hover {
             background-color: #3a3a3a;
         }
+
         .dropdown.active .dropdown-content {
             display: flex;
         }
+
         .dropdown button {
             padding: 10px 40px;
             background-color: #222;
@@ -61,11 +105,13 @@
             border: none;
             cursor: pointer;
         }
+
         .brand {
             color: white;
             text-decoration: none;
             font-size: 24px;
         }
+
         .content {
             background-color: #1e1e1e;
             padding: 20px;
@@ -74,49 +120,61 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
+
         .content h1 {
             font-size: 32px;
             margin-bottom: 15px;
         }
+
         .content p {
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 20px;
             color: #ddd;
         }
+
         .content .meta {
             display: flex;
             justify-content: space-between;
             color: #888;
             font-size: 16px;
         }
+
         .content .meta .author {
             font-weight: bold;
         }
+
         .time {
             color: #aaa;
             font-size: 16px;
         }
+
         .comments-section {
             margin-top: 40px;
         }
+
         .comments-section h3 {
             font-size: 24px;
             margin-bottom: 15px;
+            color: #fff;
         }
+
         .comment {
             background-color: #2a2a2a;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 15px;
         }
+
         .comment .author {
             font-weight: bold;
-            color: #FFD700;
+            color: #aaa;
         }
+
         .comment p {
             margin: 10px 0;
         }
+
         .comment-form {
             display: flex;
             flex-direction: column;
@@ -124,6 +182,7 @@
             justify-content: center;
             margin-top: 20px;
         }
+
         .comment-form textarea {
             width: 80%;
             height: 80px;
@@ -135,19 +194,26 @@
             color: white;
             resize: none;
         }
+
         .comment-form button {
-            background-color: white;
+            background-color: #444;
+            color: white;
             border: none;
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            color: black;
         }
+
+        .comment-form button:hover {
+            background-color: #aaa;
+        }
+
         .difficulty-vote {
             margin-top: 20px;
             display: flex;
             justify-content: space-around;
         }
+
         .difficulty-vote button {
             background-color: #444;
             color: white;
@@ -157,14 +223,65 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
+
         .difficulty-vote button:hover {
-            background-color: #FFD700;
+            background-color: #aaa;
         }
+
         hr {
             border: 0;
             border-top: 1px solid #444;
             margin: 20px 0;
         }
+
+        /* 파일 다운로드 버튼 스타일 */
+        .file-download-btn {
+            display: block;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            width: 660px;
+            margin: 0 auto; /* 수평 중앙 정렬 */
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .file-download-btn:hover {
+            background-color: #444;
+            border-color: #888;
+        }
+
+        .Submit-btn {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .Submit-btn:hover {
+            background-color: #444;
+            border-color: #888;
+        }
+
+        .centered {
+            display: flex;
+            justify-content: center;  /* 수평 중앙 정렬 */
+            align-items: center;      /* 수직 중앙 정렬 */
+            gap: 10px;                /* input과 button 사이에 공간 추가 */
+        }
+
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -172,24 +289,6 @@
             const dropdownMenu = document.querySelector('.dropdown');
             dropdownButton.addEventListener('click', function () {
                 dropdownMenu.classList.toggle('active');
-            });
-
-            // 댓글 제출
-            const commentForm = document.querySelector('.comment-form');
-            commentForm.addEventListener('submit', function (event) {
-                event.preventDefault(); // 폼 제출 방지
-                const commentText = document.querySelector('.comment-form textarea').value;
-                if (commentText) {
-                    const commentSection = document.querySelector('.comments-list');
-                    const newComment = document.createElement('div');
-                    newComment.classList.add('comment');
-                    newComment.innerHTML = `
-                        <div class="author">Anonymous</div>
-                        <p>${commentText}</p>
-                    `;
-                    commentSection.appendChild(newComment);
-                    document.querySelector('.comment-form textarea').value = ''; // 입력란 비우기
-                }
             });
         });
     </script>
@@ -217,7 +316,7 @@
 
     <div class="content">
         <h1><%= posts.problemContent.title %></h1>
-       
+
         <div class="meta">
             <span class="author">By: <%= posts.userId.id %></span>
             <span class="date-time">
@@ -227,27 +326,35 @@
         </div>
         <hr>
         <p><%= posts.problemContent.text %></p><br>
-        <form method="post">
-            <input type="text" name="flag" placeholder="Enter flag">
-            <button type="submit">submit</button>
+
+        <form method="post" style="margin-top: 20px;">
+            <button class="file-download-btn" onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'" type="button">Download File</button>
         </form>
 
+        <form method="post" style="margin-top: 20px;">
+            <div class="centered">
+                <input type="text" name="flag" placeholder="Enter flag" required class="small-input">
+                <input type="hidden" name="score" value="<%= posts.problemContent.score %>">
+                <button type="submit" class="Submit-btn">Submit</button>
+            </div>
+        </form>
     </div>
 
     <!-- 댓글 섹션 -->
-    <div class="comments-section">
-        <h3>Comment</h3>
-        <div class="comments-list">
-            <!-- 댓글이 여기에 동적으로 추가됩니다 -->
-        </div>
-
-        <!-- 댓글 입력 폼 -->
-        <form method="post">
-            <div class="comment-form">
-                <textarea placeholder="Enter your comment..."></textarea><br>
-                <button type="submit">submit</button>
+    <div class="content">
+        <div class="comments-section">
+            <div class="comments-list">
+                <!-- 댓글이 여기에 동적으로 추가됩니다 -->
             </div>
-        </form>
+
+            <!-- 댓글 입력 폼 -->
+            <form method="post">
+                <div class="comment-form">
+                    <textarea placeholder="Enter your comment..."></textarea><br>
+                    <button type="submit" class="Submit-btn">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>

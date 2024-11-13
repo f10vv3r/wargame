@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 
 exports.fileDownload = (req, res) => {
     console.log(req.params);

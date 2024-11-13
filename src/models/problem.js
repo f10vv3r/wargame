@@ -1,4 +1,5 @@
 const mysql = require("mysql2/promise"); 
+const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
@@ -15,7 +16,7 @@ const conn = mysql.createPool({
 });
 
 exports.infoProblem = async (proData) => {
-    const info_query = 'SELECT * FROM problems WHERE pro_idx = ?';
+    const info_query = 'SELECT * FROM problems WHERE pro_idx = ?;';
 
     try {
         const [problemInfoResult] = await conn.query(info_query, proData); 
@@ -25,6 +26,81 @@ exports.infoProblem = async (proData) => {
     } catch (err) {
         console.error("Error fetching problem info:", err);
         throw err;  
+    }
+};
+
+exports.resultCheckFlag = async (pro_idx, flag) => {
+    const check_query = `SELECT * FROM problems WHERE pro_idx = ? AND flag = ?;`;
+
+    try {
+        const [checkFlagResult] = await conn.query(check_query, [pro_idx, md5(flag)]); 
+        const proContent = checkFlagResult[0]; 
+
+        return proContent; 
+    } catch (err) {
+        console.error("Error checking flag:", err);
+        throw err;  
+    }
+};
+
+exports.resultInsertFlag = async (pro_idx, score, id) => {
+    const fetch_query = `UPDATE users SET flag = ? WHERE id = ?;`;
+    const search_query = `SELECT score, flag FROM users WHERE id = ?`;
+    const scoreUpdate_query = `UPDATE users SET score = ? WHERE id = ?;`;
+
+    try {
+        const [searchScoreResult] = await conn.query(search_query, [id]);
+        
+        if (!searchScoreResult[0]) {
+            throw new Error("User not found");
+        }
+
+        let userScore = searchScoreResult[0].score;
+        let flag = searchScoreResult[0].flag;
+
+        score = parseInt(score, 10);
+        userScore = parseInt(userScore, 10);
+
+        let flagObj = { "pro_idx": [] }; 
+        
+        if (flag) {
+            if (typeof flag === 'string') {
+                try {
+                    flagObj = JSON.parse(flag);
+                    console.log("Parsed flag:", flagObj); 
+                } catch (err) {
+                    console.error("Error parsing flag:", err);
+                    throw new Error("Invalid flag data format");
+                }
+            } else if (typeof flag === 'object') {
+                
+                flagObj = flag;
+                console.log("Flag is already an object:", flagObj); 
+            } else {
+                console.log("Invalid flag format:", flag); 
+                throw new Error("Invalid flag format");
+            }
+        }
+
+        if (!flagObj.pro_idx.includes(pro_idx)) {
+            userScore += score;
+            await conn.query(scoreUpdate_query, [userScore, id]);
+            
+            console.log(`Adding pro_idx: ${pro_idx} to the array`); 
+            flagObj.pro_idx.push(pro_idx); 
+        } else {
+            console.log(`pro_idx: ${pro_idx} already exists in flag`); 
+        }
+
+        const flagValue = JSON.stringify(flagObj);
+
+        await conn.query(fetch_query, [flagValue, id]);
+
+        return { pro_idx, score, id };
+
+    } catch (err) {
+        console.error("Error in resultInsertFlag:", err);
+        throw err;
     }
 };
 

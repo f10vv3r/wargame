@@ -7,7 +7,10 @@ const uploadController = require("../controllers/upload.controller.js");
 const router = express.Router();
 
 router.get("/", wargameController.renderWargamePage);
+
 router.get("/problem", problemController.renderProblemPage);
+router.post("/problem", problemController.checkFlag);
+
 router.get("/upload", uploadController.renderUploadPage);
 router.post("/upload", uploadController.uploadMiddleware, uploadController.handleUpload);
 

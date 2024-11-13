@@ -35,7 +35,7 @@ app.use("/signup", singupRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/wargame", wargameRouter);
-app.use("/upload", downloadRouter);
+app.use("/download", downloadRouter);
 app.use("/error", errorRouter);
 
 app.listen(port, (err) => {

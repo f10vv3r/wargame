@@ -222,7 +222,7 @@
     <div class="form-container">
         <div class="form-background">
             <h1>Upload</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <input type="text" name="title" placeholder="Title" required class="small-input"><br>
                 <textarea name="text" placeholder="Text" required class="large-input"></textarea><br>
         
@@ -242,7 +242,7 @@
                 <div class="file-input-container">
                     <label for="file" class="file-label">Choose a file</label>
         
-                        <input type="file" name="file" id="file" class="file-input" accept=".zip">
+                        <input type="file" name="file" id="file" class="file-input" accept=".zip" required>
               
                 </div>
                 <button type="submit">Submit</button>

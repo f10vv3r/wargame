@@ -212,7 +212,8 @@
             <div class="container">
                 <% categoryPosts.forEach(post => { %>
                     <button onclick="location.href='/wargame/problem?page=<%= post.pro_idx %>'">
-                        <%= post.title %>
+                        <%= post.title %><br><br>
+                        <%= post.score %>
                     </button>
                 <% }) %>
             </div>

@@ -20,3 +20,31 @@ exports.renderProblemPage = async (req, res) => {
         return res.send(`<script>alert("Invalid Token. Please Login again."); window.location.href = '/';</script>`);
     }
 };
+
+exports.checkFlag = async (req, res) => {
+    const flag = req.body.flag;
+    const score = req.body.score;
+    const page = req.query.page;
+
+    const token = req.cookies.session;
+    const verified = jwt.verify(token, SECRET_key);
+    const id = verified.id;
+
+    try {
+        const result = await ProblemModel.resultCheckFlag(page, flag);
+        
+        if (result) {
+                
+            await ProblemModel.resultInsertFlag(page, score, id);
+
+            return res.send(`<script>alert("Correct flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
+        } else {
+            return res.send(`<script>alert("Incorrect flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
+        }
+
+
+    } catch (error) {
+        console.error("FLAG verification failed:", error);  
+        return res.send(`<script>alert("Incorrect flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
+    }
+};
