@@ -12,7 +12,7 @@ exports.renderWargamePage = async (req, res) => {
 
         const { count, content } = await WargameModel.infoProblem();
         const user = await WargameModel.infoUser(verified.id);
-       
+        console.log(user);
         res.render("wargame", { 'posts': {count, content, user} }); 
 
 
