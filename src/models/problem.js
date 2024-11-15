@@ -73,7 +73,6 @@ exports.resultInsertFlag = async (pro_idx, score, id) => {
                     throw new Error("Invalid flag data format");
                 }
             } else if (typeof flag === 'object') {
-                
                 flagObj = flag;
                 console.log("Flag is already an object:", flagObj); 
             } else {

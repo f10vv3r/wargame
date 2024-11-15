@@ -45,7 +45,7 @@ exports.renderUploadPage = (req, res) => {
 
 
 exports.handleUpload = async (req, res) => {
-    const { title, text, flag, category } = req.body;
+    const { title, text, category, flag, score } = req.body;
     const fileName = req.file.originalname;
 
     console.log(req.body); 
@@ -56,7 +56,7 @@ exports.handleUpload = async (req, res) => {
         const verified = jwt.verify(token, SECRET_key);
 
         const usrIdx = await UploadModel.whatUsrIdx(verified.id);
-        await UploadModel.uploadProblem({usrIdx, title, text, category, flag, fileName});
+        await UploadModel.uploadProblem({usrIdx, title, text, category, flag, score, fileName});
 
         res.send(`<script>alert("upload success"); window.location.href = '/wargame';</script>`);
     } catch (error) {

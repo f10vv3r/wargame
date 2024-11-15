@@ -32,3 +32,17 @@ exports.infoProblem = async () => {
         throw err;  
     }
 };
+
+exports.infoUser = async (id) => {
+    const user_query = "SELECT * FROM users WHERE id = ?;";
+
+    try {
+        const [user] = await conn.query(user_query, id);
+        const userInfo = [user][0][0];
+        return { userInfo }; 
+
+    } catch (err) {
+        console.error("Error wargame models infoUser:", err);
+        throw err;  
+    }
+};
