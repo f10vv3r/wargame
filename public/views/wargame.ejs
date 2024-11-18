@@ -224,8 +224,20 @@
                     %>
                 
                     <button class="<%= buttonClass %>" onclick="location.href='/wargame/problem?page=<%= post.pro_idx %>'">
-                        <%= post.title %><br><br>
-                        <%= post.score %>
+                        <% if (post.title.length > 15) { %>
+                            <% let title = "" %>
+
+                            <% for (let i = 0; i < 12; i++) {%>
+                                <% title += post.title[i] %>
+                            <% } %>
+                            <% title += "..." %>
+                            <%= title %>
+
+                        <% } else { %>
+                            <%= post.title %>
+                        <% } %>
+                        <br><br>
+                        <%= post.score %> 
                     </button>
                 <% }) %>
             </div>
