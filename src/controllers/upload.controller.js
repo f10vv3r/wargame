@@ -16,7 +16,7 @@ const upload = multer({
         const ext = path.extname(file.originalname);
 
         if (ext !== '.zip') {
-            return res.send(`<script>alert("Only zip files are allowed."); window.location.href = '/';</script>`);
+            return done(new Error('Only zip files are allowed.'));
         }
 
         done(null, path.basename(file.originalname, ext) + ext);

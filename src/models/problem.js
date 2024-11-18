@@ -103,6 +103,21 @@ exports.resultInsertFlag = async (pro_idx, score, id) => {
     }
 };
 
+exports.checkDifficulty = async (pro_idx) => {
+    const setDifficultyLevel_query = 'SELECT vote_value FROM votes WHERE pro_idx = ? GROUP BY vote_value ORDER BY COUNT(*) DESC LIMIT 1;';
+    const proIdx = parseInt(pro_idx, 10);
+    
+    console.log(proIdx);
+
+    try {   
+        const [voteValue] = await conn.query(setDifficultyLevel_query, proIdx);
+
+        return voteValue[0].vote_value;
+    } catch (err) {
+        return 0;
+    }
+} 
+
 exports.whoUser = async (usrData) => {
     const user_query = 'SELECT id FROM users WHERE usr_idx = ?';
 

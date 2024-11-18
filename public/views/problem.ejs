@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <style id="theme-color">
         body {
-            background-color: #121212;  /* 기본 배경색을 어두운 무채색으로 설정 */
+            background-color: #121212;
             color: white;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -41,8 +41,8 @@
             background-color: #333;
             color: #f5f5f5;
             transition: background-color 0.3s, border-color 0.3s;
-            height: 48px; /* 높이를 명시적으로 설정 */
-            box-sizing: border-box; /* 패딩과 테두리가 요소의 크기에 포함되도록 */
+            height: 48px;
+            box-sizing: border-box;
         }
 
         input[type="text"]:focus {
@@ -58,7 +58,7 @@
             padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
-            height: 48px; /* 버튼 높이를 input과 맞추기 */
+            height: 48px;
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -234,7 +234,6 @@
             margin: 20px 0;
         }
 
-        /* 파일 다운로드 버튼 스타일 */
         .file-download-btn {
             display: block;
             background-color: #333;
@@ -246,7 +245,7 @@
             text-decoration: none;
             font-size: 16px;
             width: 660px;
-            margin: 0 auto; /* 수평 중앙 정렬 */
+            margin: 0 auto;
             cursor: pointer;
             transition: background-color 0.3s, border-color 0.3s;
         }
@@ -277,11 +276,61 @@
 
         .centered {
             display: flex;
-            justify-content: center;  /* 수평 중앙 정렬 */
-            align-items: center;      /* 수직 중앙 정렬 */
-            gap: 10px;                /* input과 button 사이에 공간 추가 */
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
+        .difficulty-vote-section {
+            background-color: #1e1e1e;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .difficulty-vote-section h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .difficulty-vote-section h3 {
+            color: #888;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+
+        .vote-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .vote-buttons button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .vote-buttons button:hover {
+            background-color: #aaa;
+        }
+
+        #selected-level {
+            color: #aaa;
+            font-weight: bold;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -340,6 +389,46 @@
         </form>
     </div>
 
+ <!-- 난이도 섹션 -->
+<% let level = posts.difficulty %>
+<div class="content difficulty-vote-section">
+    <h2>Level : <span id="level-display"><%= level %></span></h2>
+
+    <form method="post" action="./problem/vote">
+        <div class="vote-buttons">
+            <button type="button" id="minus">-</button>
+            <h3>선택한 난이도: <span id="selected-level">없음</span></h3>
+            <button type="button" id="plus">+</button>
+        </div>
+
+        <input type="hidden" name="difficulty" id="difficulty" value="0">
+        <input type="hidden" name="page" value="<%= posts.problemContent.pro_idx %>">
+        
+        <div>
+            <button type="submit" class="">vote</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    let voteLevel = 0;
+    const selectedLevel = document.getElementById('selected-level');
+    const difficultyInput = document.getElementById('difficulty');  // hidden input
+
+    document.getElementById('minus').addEventListener('click', () => {
+        voteLevel = Math.max(0, voteLevel - 1);  
+        selectedLevel.textContent = voteLevel === 0 ? '없음' : voteLevel; 
+        difficultyInput.value = voteLevel;  
+    });
+
+    document.getElementById('plus').addEventListener('click', () => {
+        voteLevel = Math.min(10, voteLevel + 1);  
+        selectedLevel.textContent = voteLevel; 
+        difficultyInput.value = voteLevel;
+    });
+</script>
+
+
     <!-- 댓글 섹션 -->
     <div class="content">
         <div class="comments-section">
@@ -347,7 +436,6 @@
                 <!-- 댓글이 여기에 동적으로 추가됩니다 -->
             </div>
 
-            <!-- 댓글 입력 폼 -->
             <form method="post">
                 <div class="comment-form">
                     <textarea placeholder="Enter your comment..."></textarea><br>
@@ -356,7 +444,6 @@
             </form>
         </div>
     </div>
-
 </body>
 
 </html>

@@ -12,8 +12,9 @@ exports.renderProblemPage = async (req, res) => {
 
         const problemContent = await ProblemModel.infoProblem(page);
         const userId = await ProblemModel.whoUser(problemContent.usr_idx);
-
-        res.render("problem", { 'posts': { problemContent , userId } });
+        const difficulty = await ProblemModel.checkDifficulty(problemContent.pro_idx);
+        
+        res.render("problem", { 'posts': { problemContent , userId , difficulty } });
 
     } catch (error) {
         console.error("JWT verification failed:", error);  
@@ -25,7 +26,7 @@ exports.checkFlag = async (req, res) => {
     const flag = req.body.flag;
     const score = req.body.score;
     const page = req.query.page;
-
+    
     const token = req.cookies.session;
     const verified = jwt.verify(token, SECRET_key);
     const id = verified.id;
@@ -48,3 +49,4 @@ exports.checkFlag = async (req, res) => {
         return res.send(`<script>alert("Incorrect flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
     }
 };
+

@@ -214,16 +214,15 @@
             <div class="container">
                 <% categoryPosts.forEach(post => { %>
                     <% 
-                        console.log("post.pro_idx:", post.pro_idx); 
-                        console.log("flag.pro_idx:", posts.user.userInfo.flag.pro_idx);
-                        
-                        const flagArray = Array.isArray(posts.user.userInfo.flag.pro_idx) 
-                                          ? posts.user.userInfo.flag.pro_idx 
-                                          : [posts.user.userInfo.flag.pro_idx];
-
+                        const flagArray = posts.user.userInfo.flag && posts.user.userInfo.flag.pro_idx 
+                                        ? Array.isArray(posts.user.userInfo.flag.pro_idx) 
+                                            ? posts.user.userInfo.flag.pro_idx 
+                                            : [posts.user.userInfo.flag.pro_idx]
+                                        : [];
                         const isInFlag = flagArray.includes(String(post.pro_idx)); 
                         const buttonClass = isInFlag ? 'green-button' : ''; 
                     %>
+                
                     <button class="<%= buttonClass %>" onclick="location.href='/wargame/problem?page=<%= post.pro_idx %>'">
                         <%= post.title %><br><br>
                         <%= post.score %>
