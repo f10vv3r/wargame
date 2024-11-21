@@ -149,65 +149,6 @@
             font-size: 16px;
         }
 
-        .comments-section {
-            margin-top: 40px;
-        }
-
-        .comments-section h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .comment {
-            background-color: #2a2a2a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .comment .author {
-            font-weight: bold;
-            color: #aaa;
-        }
-
-        .comment p {
-            margin: 10px 0;
-        }
-
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .comment-form textarea {
-            width: 80%;
-            height: 80px;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background-color: #333;
-            color: white;
-            resize: none;
-        }
-
-        .comment-form button {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .comment-form button:hover {
-            background-color: #aaa;
-        }
-
         .difficulty-vote {
             margin-top: 20px;
             display: flex;
@@ -331,6 +272,140 @@
             color: #aaa;
             font-weight: bold;
         }
+
+        .vote-submit {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 290px
+        }
+
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comments-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .comment {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+
+            width: 670px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comment .author {
+            font-weight: bold;
+            color: #aaa;
+        }
+
+        .comment p {
+            margin: 10px 0;
+            color: #ddd;
+        }
+
+        .comment .comment-actions {
+            display: none;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .comment:hover .comment-actions {
+            display: flex;
+        }
+
+        .comment:focus-within .comment-actions {
+            display: none;
+        }
+
+        .comment-action-btn {
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding-left: 8px;
+            color: #707070;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .comment-form textarea {
+            width: 80%;
+            height: 80px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            resize: none;
+        }
+
+        .comment-form button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background-color: #aaa;
+        }
+
+        .comment-btn {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            width: 670px;
+            
+        }
+
+        .comment-btn:hover {
+            background-color: #444;
+            border-color: #888;
+        }
+
+        .comment.reply {
+            max-width: 600px;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -339,6 +414,22 @@
             dropdownButton.addEventListener('click', function () {
                 dropdownMenu.classList.toggle('active');
             });
+
+            document.querySelectorAll('.comment').forEach(comment => {
+                comment.addEventListener('mouseenter', function () {
+                    hideAllCommentActions();
+                    comment.querySelector('.comment-actions').style.display = 'flex';
+                });
+                comment.addEventListener('mouseleave', function () {
+                    comment.querySelector('.comment-actions').style.display = 'none';
+                });
+            });
+
+            function hideAllCommentActions() {
+                document.querySelectorAll('.comment .comment-actions').forEach(actions => {
+                    actions.style.display = 'none';
+                });
+            }
         });
     </script>
 </head>
@@ -364,20 +455,28 @@
     </nav>
 
     <div class="content">
-        <h1><%= posts.problemContent.title %></h1>
+        <h1>
+            <%= posts.problemContent.title %>
+        </h1>
 
         <div class="meta">
-            <span class="author">By: <%= posts.userId.id %></span>
+            <span class="author">By: <%= posts.writerId.id %></span>
             <span class="date-time">
-                <%= new Date(posts.problemContent.pro_time).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) %> 
-                <%= new Date(posts.problemContent.pro_time).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }) %>
+                <%= new Date(posts.problemContent.pro_time).toLocaleDateString('ko-KR', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
+                <%= new Date(posts.problemContent.pro_time).toLocaleTimeString('ko-KR', { hour: '2-digit' ,minute: '2-digit' }) %>
             </span>
         </div>
         <hr>
-        <p><%= posts.problemContent.text %></p><br>
+        <ul>
+            <p>
+                <%= posts.problemContent.text %>
+            </p><br>
+        </ul>
 
         <form method="post" style="margin-top: 20px;">
-            <button class="file-download-btn" onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'" type="button">Download File</button>
+            <button class="file-download-btn"
+                onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'"
+                type="button">Download File</button>
         </form>
 
         <form method="post" style="margin-top: 20px;">
@@ -389,61 +488,163 @@
         </form>
     </div>
 
- <!-- 난이도 섹션 -->
-<% let level = posts.difficulty %>
-<div class="content difficulty-vote-section">
-    <h2>Level : <span id="level-display"><%= level %></span></h2>
+    <!-- level section -->
+    <% let level=posts.difficulty %>
+        <div class="content difficulty-vote-section">
+            <h2>Level : <span id="level-display">
+                    <%= level %>
+                </span></h2>
 
-    <form method="post" action="./problem/vote">
-        <div class="vote-buttons">
-            <button type="button" id="minus">-</button>
-            <h3>선택한 난이도: <span id="selected-level">없음</span></h3>
-            <button type="button" id="plus">+</button>
-        </div>
+            <form method="post" action="./problem/vote">
+                <div class="vote-buttons">
+                    <button type="button" id="minus">-</button>
+                    <h3>선택한 난이도: <span id="selected-level">없음</span></h3>
+                    <button type="button" id="plus">+</button>
+                </div>
 
-        <input type="hidden" name="difficulty" id="difficulty" value="0">
-        <input type="hidden" name="page" value="<%= posts.problemContent.pro_idx %>">
-        
-        <div>
-            <button type="submit" class="">vote</button>
-        </div>
-    </form>
-</div>
+                <input type="hidden" name="difficulty" id="difficulty" value="0">
+                <input type="hidden" name="page" value="<%= posts.problemContent.pro_idx %>">
 
-<script>
-    let voteLevel = 0;
-    const selectedLevel = document.getElementById('selected-level');
-    const difficultyInput = document.getElementById('difficulty');  // hidden input
-
-    document.getElementById('minus').addEventListener('click', () => {
-        voteLevel = Math.max(0, voteLevel - 1);  
-        selectedLevel.textContent = voteLevel === 0 ? '없음' : voteLevel; 
-        difficultyInput.value = voteLevel;  
-    });
-
-    document.getElementById('plus').addEventListener('click', () => {
-        voteLevel = Math.min(10, voteLevel + 1);  
-        selectedLevel.textContent = voteLevel; 
-        difficultyInput.value = voteLevel;
-    });
-</script>
-
-
-    <!-- 댓글 섹션 -->
-    <div class="content">
-        <div class="comments-section">
-            <div class="comments-list">
-                <!-- 댓글이 여기에 동적으로 추가됩니다 -->
-            </div>
-
-            <form method="post">
-                <div class="comment-form">
-                    <textarea placeholder="Enter your comment..."></textarea><br>
-                    <button type="submit" class="Submit-btn">Submit</button>
+                <div>
+                    <button type="submit" class="vote-submit">
+                        <h3>vote</h3>
+                    </button>
                 </div>
             </form>
         </div>
-    </div>
+
+        <script>
+            let voteLevel = 0;
+            const selectedLevel = document.getElementById('selected-level');
+            const difficultyInput = document.getElementById('difficulty');  // hidden input
+
+            document.getElementById('minus').addEventListener('click', () => {
+                voteLevel = Math.max(0, voteLevel - 1);
+                selectedLevel.textContent = voteLevel === 0 ? '없음' : voteLevel;
+                difficultyInput.value = voteLevel;
+            });
+
+            document.getElementById('plus').addEventListener('click', () => {
+                voteLevel = Math.min(10, voteLevel + 1);
+                selectedLevel.textContent = voteLevel;
+                difficultyInput.value = voteLevel;
+            });
+        </script>
+
+
+        <!-- comment section -->
+        <div class="content">
+            <h2>Comment</h2>
+            <div class="comments-section">
+                <form method="post" action="./problem/comment">
+                    <input type="hidden" name="pro_idx" value="<%= posts.problemContent.pro_idx %>">
+                    <input type="hidden" name="depth" value=0>
+                    <div class="comment-form">
+                        <textarea placeholder="Enter your comment..." name="comment"></textarea><br>
+                        <button type="submit" class="comment-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      
+        <% function renderComments(commentContent, comGroup=0, depth=0) { %>
+            <% for (let i=0; i < posts.commentContent.length; i++) { %>
+                <% if (commentContent[i].com_group==comGroup) { %>
+                    <div class="comment reply" id="comment-<%= posts.commentContent[i].com_idx %>" tabindex="0">
+
+                        <span class="author">
+                            <li> 
+                                <%= commentContent[i].usr_id %>
+                     
+                                <!-- Reply button -->
+                                <button type="button" class="comment-action-btn" onclick="toggleReplyForm(this, '<%= commentContent[i].com_idx %>')">Reply</button>
+
+                                <!-- Edit button -->
+                                <% if (posts.currentUsrId==commentContent[i].usr_id) { %>
+                                    <button type="button" class="comment-action-btn" onclick="toggleEditForm(this, '<%= commentContent[i].com_idx %>')">Edit</button>
+                                <% } %>
+
+                                <!-- Delete button -->
+                                <% if (posts.currentUsrClass==1 || posts.currentUsrId==commentContent[i].usr_id) { %>
+                                    <button type="button" id="deleteCommentBtn" class="comment-action-btn" onclick="toggleDeleteForm('<%= commentContent[i].com_idx %>')">Delete</button>
+                                <% } %>
+                               
+                            </li>
+                        </span>
+
+                        <p>
+                            <%= commentContent[i].text %>
+                        </p>
+
+                        <span class="time">
+                            <%= new Date(commentContent[i].com_time).toLocaleDateString('ko-KR', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
+                            <%= new Date(commentContent[i].com_time).toLocaleTimeString('ko-KR', { hour: '2-digit' , minute: '2-digit' }) %>
+                        </span>
+
+                        <!-- Reply form (initially hidden) -->
+                        <div class="reply-form-container" style="display:none;"
+                            id="reply-form-<%= posts.commentContent[i].com_idx %>">
+                            <form method="post" action="./problem/comment" class="reply-form">
+                                <input type="hidden" name="com_idx" value="<%= commentContent[i].com_idx %>">
+                                <input type="hidden" name="pro_idx" value="<%= commentContent[i].pro_idx %>">
+                                <input type="hidden" name="depth" value="<%= posts.commentContent[i].depth + 1 %>">
+                                <input type="hidden" name="usr_idx" value="<%= posts.currentUsrIdx.usr_idx %>">
+                                <input type="text" name="comment" placeholder="Enter your reply...">
+                                <button type="submit">Reply</button>
+                            </form>
+                        </div>
+
+                        <!-- Edit form (initially hidden) -->
+                        <div class="edit-form-container" style="display:none;"
+                            id="edit-form-<%= posts.commentContent[i].com_idx %>">
+                            <form method="post" action="./problem/comment/edit" class="edit-form">
+                                <input type="hidden" name="comIdx" value="<%= commentContent[i].com_idx %>">
+                                <input type="text" name="editText" value="<%= commentContent[i].text %>">
+                                <button type="submit">Edit</button>
+                            </form>
+                        </div>
+
+                        <% renderComments(commentContent, commentContent[i].com_idx, depth + 1); %>
+                    </div>
+                <% } %>
+            <% } %>
+        <% } %> <!--FIX 필요-->
+        <% if (posts.countComment > 0) { %> 
+            <div class="content">
+                <div class="comments-list">
+                    <% renderComments(posts.commentContent, 0, 0); %>
+                </div>
+            </div>
+        <% } %>
+
+            <script>
+                function toggleReplyForm(button, comIdx) {
+                    const replyFormContainer = document.getElementById('reply-form-' + comIdx);
+
+                    if (replyFormContainer.style.display === "none" || replyFormContainer.style.display === "") {
+                        replyFormContainer.style.display = "block";
+                    } else {
+                        replyFormContainer.style.display = "none";
+                    }
+                }
+
+                function toggleEditForm(button, comIdx) {
+                    const editFormContainer = document.getElementById('edit-form-' + comIdx);
+
+                    if (editFormContainer.style.display === "none" || editFormContainer.style.display === "") {
+                        editFormContainer.style.display = "block";
+                    } else {
+                        editFormContainer.style.display = "none";
+                    }
+                }
+
+                function toggleDeleteForm(comIdx) {
+                    var deleteForm = document.getElementById('deleteCommentBtn');
+
+                    window.location.href = './problem/comment/delete/'+comIdx;
+                }
+            </script>
+
 </body>
 
 </html>
