@@ -1,5 +1,6 @@
 const mysql = require("mysql2/promise"); 
 const md5 = require('md5');
+const { vote } = require("../controllers/vote.controller");
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
@@ -25,6 +26,34 @@ exports.infoProblem = async (proData) => {
         return proContent; 
     } catch (err) {
         console.error("Error fetching problem info:", err);
+        throw err;  
+    }
+};
+
+exports.infoComment = async (proData) => {
+    const info_query = 'SELECT * FROM comments WHERE pro_idx = ? ORDER BY depth ASC, com_time DESC;';
+
+    try {
+        const [commentInfoResult] = await conn.query(info_query, proData); 
+        const comContent = commentInfoResult; 
+
+        return comContent; 
+    } catch (err) {
+        console.error("Error Models problem.js infoComment:", err);
+        throw err;  
+    }
+};
+
+exports.howManyComment = async (proData) => {
+    const count_query = 'SELECT COUNT(*) AS count FROM comments WHERE pro_idx = ?;';
+
+    try {
+        const [commentCountResult] = await conn.query(count_query, proData); 
+        const comCount = commentCountResult; 
+
+        return comCount; 
+    } catch (err) {
+        console.error("Error Models problem.js howManyComment:", err);
         throw err;  
     }
 };
@@ -107,11 +136,8 @@ exports.checkDifficulty = async (pro_idx) => {
     const setDifficultyLevel_query = 'SELECT vote_value FROM votes WHERE pro_idx = ? GROUP BY vote_value ORDER BY COUNT(*) DESC LIMIT 1;';
     const proIdx = parseInt(pro_idx, 10);
     
-    console.log(proIdx);
-
     try {   
         const [voteValue] = await conn.query(setDifficultyLevel_query, proIdx);
-
         return voteValue[0].vote_value;
     } catch (err) {
         return 0;
@@ -127,7 +153,35 @@ exports.whoUser = async (usrData) => {
 
         return userId; 
     } catch (err) {
-        console.error("Error finding user info:", err);
+        console.error("Error Models problem.js => whoUser:", err);
+        throw err;  
+    }
+}
+
+exports.whoUsrIdx = async (usrData) => {
+    const user_query = 'SELECT usr_idx FROM users WHERE id = ?';
+
+    try {
+        const [userIdxResult] = await conn.query(user_query, usrData); 
+        const userIdx = userIdxResult[0]; 
+
+        return userIdx; 
+    } catch (err) {
+        console.error("Error Models problem.js => whoUsrIdx:", err);
+        throw err;  
+    }
+}
+
+exports.whoCommentUser = async (usrData) => {
+    const user_query = 'SELECT id FROM comments WHERE usr_idx = ?';
+
+    try {
+        const [userIdResult] = await conn.query(user_query, usrData); 
+        const userId = userIdResult[0]; 
+
+        return userId; 
+    } catch (err) {
+        console.error("Error Models problem.js => whoCommentUser:", err);
         throw err;  
     }
 }
