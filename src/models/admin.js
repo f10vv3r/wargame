@@ -111,7 +111,7 @@ exports.editProblemNotFile = async (ediContent) => {
 };
 
 exports.editProblem = async (ediContent) => {
-    const update_query = "UPDATE problems SET title = ?, text = ?, category = ?, flag = ?, score = ?, file = ? WHERE pro_idx = ?;";
+    const delete_query = "UPDATE problems SET title = ?, text = ?, category = ?, flag = ?, score = ?, file = ? WHERE pro_idx = ?;";
     const proIdx = ediContent.proIdx; 
     const title = ediContent.title; 
     const text = ediContent.text; 
@@ -120,7 +120,7 @@ exports.editProblem = async (ediContent) => {
     const score = ediContent.score; 
     const file = ediContent.fileName; 
     try {
-        await conn.query(update_query,  [title, text, category, flag, score, file, proIdx]);
+        await conn.query(delete_query,  [title, text, category, flag, score, file, proIdx]);
         return 1;
     } catch (err) {
         console.error("Error admin models  => editProblem:", err);
@@ -130,13 +130,37 @@ exports.editProblem = async (ediContent) => {
 
 
 exports.deleteProblem = async (ediContent) => {
-    const update_query = "DELETE FROM problems WHERE pro_idx = ?;";
+    const delete_query = "DELETE FROM problems WHERE pro_idx = ?;";
     
     try {
-        await conn.query(update_query, [ediContent]);
+        await conn.query(delete_query, [ediContent]);
         return 1;
     } catch (err) {
         console.error("Error admin models  => deleteProblem:", err);
+        throw err;  
+    }
+};
+
+exports.banUser = async (usrIdx) => {
+    const delete_query = "DELETE FROM reports WHERE usr_idx = ?;";
+    
+    try {
+        await conn.query(delete_query, [usrIdx]);
+        return 1;
+    } catch (err) {
+        console.error("Error admin models  => banUser:", err);
+        throw err;  
+    }
+};
+
+exports.checkReport = async (repIdx) => {
+    const delete_query = "DELETE FROM reports WHERE rep_idx = ?;";
+    
+    try {
+        await conn.query(delete_query, [repIdx]);
+        return 1;
+    } catch (err) {
+        console.error("Error admin models  => checkReport:", err);
         throw err;  
     }
 };

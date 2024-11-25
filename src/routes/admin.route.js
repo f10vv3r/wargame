@@ -19,7 +19,7 @@ router.post("/problem/edit/:proIdx", (req, res, next) => {
         next();
     });
 }, adminController.editProblem);
-
 router.get("/problem/delete/:proIdx", adminController.deleteProblem);
-
+router.get("/user/ban/:usrIdx", adminController.banUser);
+router.get("/report/check/:repIdx", adminController.checkReport);
 module.exports = router;

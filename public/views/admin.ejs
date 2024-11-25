@@ -170,7 +170,7 @@
                             </button><br>
 
                             <button class="edt-btn" name="proEdit" onclick="location.href='/admin/problem/edit/<%= post.pro_idx %>'">Edit</button>
-                            <button class="del-btn" name="proDelete" onclick="location.href='/admin/problem/delete/<%= post.pro_idx %>'">Delete</button><br>
+                            <button class="del-btn" name="proDelete" onclick="if(confirm('Are you sure you want to delete this?')){location.href='/admin/problem/delete/<%= post.pro_idx %>'}">Delete</button><br>
 
                             title/idx : <%= post.title %>.<%= post.pro_idx %><br>
                             flag : <%= post.flag %><br>
@@ -195,7 +195,7 @@
                     flag : <br>
                 <% } %>
                 <%= new Date(posts.user[i].usr_time).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %><br>
-                <button>ban</button>
+                <button onclick="if(confirm('Are you sure you want to ban user?')){location.href='/admin/user/ban/<%= posts.user[i].usr_idx %>'}">ban</button>
                 <br><br>
             <% } %>
         </div>
@@ -206,7 +206,7 @@
                 <%= posts.report[i].usr_id %> :
                 <%= posts.report[i].content %><br>
                 <%= new Date(posts.report[i].rep_time).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %><br>
-                <button>check</button>
+                <button onclick="if(confirm('Are you sure you want to check report?')){location.href='/admin/report/check/<%= posts.report[i].rep_idx %>'}">check</button>
                 <br><br>
             <% } %>
         </div>

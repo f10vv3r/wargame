@@ -175,4 +175,56 @@ exports.deleteProblem = async (req, res) => {
 
 };
 
+exports.banUser = async (req, res) => {
+
+    try {
+        const token = req.cookies.session;
+        const verified = jwt.verify(token, SECRET_key);
+        const usrIdx = req.params.usrIdx;
+
+        if (verified.class == 1){
+
+            await AdminModel.banUser(usrIdx);
+
+            console.log(verified.id,"| Controller | admin => banUser | Success");
+            res.send(`<script>alert('Ban Success'); window.location.href = '/admin';</script>`);
+        } else {
+            console.log(verified.id,"| Controller | admin => banUser | Fail");
+            res.send(`<script>alert('Warning: You do not have permission to access this page'); window.location.href = '/';</script>`);
+        }
+
+    } catch (error) {
+        console.error("| Controller | admin => banUser", error);  
+        return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
+    }
+
+};
+
+exports.checkReport = async (req, res) => {
+
+    try {
+        const token = req.cookies.session;
+        const verified = jwt.verify(token, SECRET_key);
+        const repIdx = req.params.repIdx;
+
+        if (verified.class == 1){
+
+            await AdminModel.checkReport(repIdx);
+
+            console.log(verified.id,"| Controller | admin => checkReport | Success");
+            res.send(`<script>alert('Check Success'); window.location.href = '/admin';</script>`);
+        } else {
+            console.log(verified.id,"| Controller | admin => checkReport | Fail");
+            res.send(`<script>alert('Warning: You do not have permission to access this page'); window.location.href = '/';</script>`);
+        }
+
+    } catch (error) {
+        console.error("| Controller | admin => checkReports", error);  
+        return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
+    }
+
+};
+
+
 exports.uploadMiddleware = upload.single('file');
+
