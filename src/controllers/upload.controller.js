@@ -34,12 +34,12 @@ exports.renderUploadPage = (req, res) => {
         if (verified.class === 1){
             res.render("upload");
         } else {
-            return res.send(`<script>alert("Warning: You do not have permission to access this page"); window.location.href = '/';</script>`);
+            return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
         }
 
     } catch (error) {
         console.error("JWT verification failed:", error);  
-        return res.send(`<script>alert("Invalid Token. Please Login again."); window.location.href = '/';</script>`);
+        return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
     }
 };
 

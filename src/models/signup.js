@@ -20,9 +20,8 @@ exports.signupUser = async (userData) => {
     try {
      
         const hashedPassword = md5(userData.pw);
-        const hashedEmail = md5(userData.email); 
 
-        const [results] = await conn.query(signup_query, [userData.id, hashedPassword, hashedEmail]);
+        const [results] = await conn.query(signup_query, [userData.id, hashedPassword, userData.email]);
 
         return results;  
 

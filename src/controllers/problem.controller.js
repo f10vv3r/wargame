@@ -26,7 +26,7 @@ exports.renderProblemPage = async (req, res) => {
 
     } catch (error) {
         console.error("Error Controller problem => renderProblemPage:", error);  
-        return res.send(`<script>alert("Invalid Token. Please Login again."); window.location.href = '/';</script>`);
+        return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
     }
 
 };
@@ -54,7 +54,7 @@ exports.checkFlag = async (req, res) => {
 
 
     } catch (error) {
-        console.error("FLAG verification failed:", error);  
+        console.error("Error Controller => problem.controller.js:", error);  
         return res.send(`<script>alert("Incorrect flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
     }
 };

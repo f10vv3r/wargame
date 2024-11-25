@@ -58,6 +58,27 @@
             text-decoration: none; /* 링크 장식 제거 */
             font-size: 24px; /* 브랜드 텍스트 크기 */
         }
+        
+        .content {
+            background-color: #1e1e1e;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .content h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -92,10 +113,84 @@
     </nav>
     <br>
     <br>
-    <br>
-    <br>
-    <h1>Admin Page</h1>
-    
+   
+        <div class="content">
+            <h1>Wargame</h1><br><br>
+        
+            <% const categories = ["Web", "Pwn", "Reversing", "Forensic", "Crypto", "Misc", "Web3", "etc"]; %>
+            
+            <% categories.forEach(category => { %>
+                <% const categoryPosts = posts.problem.filter(post => post.category === category); %>
+                <% if (categoryPosts.length > 0) { %> 
+                    <h3><%= category %></h3>
+                    <div class="container">
+                        <% categoryPosts.forEach(post => { %>
+                            <% 
+                                const flagArray = posts.currentUser.userInfo.flag && posts.currentUser.userInfo.flag.pro_idx 
+                                                ? Array.isArray(posts.currentUser.userInfo.flag.pro_idx) 
+                                                    ? posts.currentUser.userInfo.flag.pro_idx 
+                                                    : [posts.currentUser.userInfo.flag.pro_idx]
+                                                : [];
+                                const isInFlag = flagArray.includes(String(post.pro_idx)); 
+                                const buttonClass = isInFlag ? 'green-button' : ''; 
+                            %>
+                        
+                            <button class="<%= buttonClass %>" onclick="location.href='/wargame/problem?page=<%= post.pro_idx %>'">
+                                <% if (post.title.length > 15) { %>
+                                    <% let title = "" %>
+        
+                                    <% for (let i = 0; i < 11; i++) {%>
+                                        <% title += post.title[i] %>
+                                    <% } %>
+                                    <% title += "..." %>
+                                    <%= title %>
+        
+                                <% } else { %>
+                                    <%= post.title %>
+                                <% } %>
+                                
+                                <br><br>
+                                
+                                <%= post.score %> 
+                                
+                            </button>
+                            
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        <% }) %>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+        
+        <div class="content">
+            <h1>User</h1>
+            <% for (let i = 0; i < posts.usrCount; i++) { %>
+                class : <%= posts.user[i].class %><br>
+                id/idx :
+                <%= posts.user[i].id %>.<%= posts.user[i].usr_idx %><br>
+                Email : <%= posts.user[i].email %><br>
+                Score : <%= posts.user[i].score %><br>
+                <% if (posts.user[i].flag) {%>
+                    flag : <%= posts.user[i].flag.pro_idx %><br>
+                <% } else { %>
+                    flag : <br>
+                <% } %>
+                <%= new Date(posts.user[i].usr_time).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %><br>
+                <button>ban</button>
+                <br><br>
+            <% } %>
+        </div>
 
-</body>
+        <div class="content">
+            <h1>Report</h1>
+            <% for (let i = 0; i < posts.repCount; i++) { %>
+                <%= posts.report[i].usr_id %> :
+                <%= posts.report[i].content %><br>
+                <%= new Date(posts.report[i].rep_time).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %><br>
+                <button>check</button>
+                <br><br>
+            <% } %>
+        </div>
+    </body>
 </html>

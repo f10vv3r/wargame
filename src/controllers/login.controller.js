@@ -23,7 +23,7 @@ exports.handleLogin = async (req, res) => {
         res.send(`<script>alert("Login Success"); window.location.href = '/wargame';</script>`);
     } catch (err) {
         console.error(err);
-        return res.send(`<script>alert("Invalid ID/PW"); window.location.href = '/login';</script>`);
+        return res.send(`<script>alert("Warning: Invalid ID/PW"); window.location.href = '/login';</script>`);
     }
 
 };

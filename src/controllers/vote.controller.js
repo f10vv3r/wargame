@@ -19,7 +19,7 @@ exports.vote = async (req, res) => {
         const check = await VoteModel.checkVote(user.usr_idx, pro_idx);
 
         if (check == 1) {
-            res.send(`<script>alert("You have already voted. Duplicate votes are not allowed."); window.location.href = '/wargame/problem?page=${pro_idx}';</script>`);
+            res.send(`<script>alert("Warning: You have already voted"); window.location.href = '/wargame/problem?page=${pro_idx}';</script>`);
         } else {
             await VoteModel.insertVoteValue(user.usr_idx, pro_idx, difficulty);
             res.send(`<script>alert("Vote Success"); window.location.href = '/wargame/problem?page=${pro_idx}';</script>`);

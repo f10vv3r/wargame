@@ -1,5 +1,4 @@
 const mysql = require("mysql2/promise");
-const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
@@ -16,7 +15,7 @@ const conn = mysql.createPool({
 
 exports.uploadProblem = (problemData, callback) => {
     const upload_query = 'INSERT INTO problems (usr_idx, title, text, category, score, flag, file) VALUES (?, ?, ?, ?, ?, ?, ?);';
-    conn.query(upload_query, [problemData.usrIdx.usr_idx ,problemData.title, problemData.text, problemData.category, problemData.score, md5(problemData.flag), problemData.fileName], (err, results) => {
+    conn.query(upload_query, [problemData.usrIdx.usr_idx ,problemData.title, problemData.text, problemData.category, problemData.score, problemData.flag, problemData.fileName], (err, results) => {
         if (err) {
             return callback(err); 
         }

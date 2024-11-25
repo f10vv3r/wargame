@@ -62,7 +62,7 @@ exports.resultCheckFlag = async (pro_idx, flag) => {
     const check_query = `SELECT * FROM problems WHERE pro_idx = ? AND flag = ?;`;
 
     try {
-        const [checkFlagResult] = await conn.query(check_query, [pro_idx, md5(flag)]); 
+        const [checkFlagResult] = await conn.query(check_query, [pro_idx, flag]); 
         const proContent = checkFlagResult[0]; 
 
         return proContent; 

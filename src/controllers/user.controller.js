@@ -1,17 +1,39 @@
+const UserModel = require('../models/user.js');
 const jwt = require("jsonwebtoken");
 
 const SECRET_key = process.env.SECRET_key;
 
-exports.renderUserPage = (req, res) => {
+exports.renderUserPage = async (req, res) => {
     
     try {
         const token = req.cookies.session;
-        jwt.verify(token, SECRET_key);
+        const verified = jwt.verify(token, SECRET_key);
+        const currentId = verified.id;
 
-        res.render("user");
+        const currentUser = await UserModel.infoUser(currentId);
+        console.log(currentUser);
+        res.render("user", { 'posts': {currentUser}});
     } catch (error) {
-        console.error("JWT verification failed:", error);  
-        return res.send(`<script>alert("Invalid Token. Please Login again."); window.location.href = '/';</script>`);
+        console.error("Error Controller user.controller.js => renderUserPage:", error);  
+        return res.send(`<script>alert("Warning: Invalid Token"); window.location.href = '/';</script>`);
+    }
+
+};
+
+exports.deleteAccount = async (req, res) => {
+    
+    try {
+        const token = req.cookies.session;
+        const verified = jwt.verify(token, SECRET_key);
+        const currentId = verified.id;
+
+        await UserModel.deleteAccount(currentId);
+
+        res.clearCookie("session", { httpOnly: true, secure: false, sameSite: 'Strict' });
+        return res.send(`<script>alert("Success Account Deletion"); window.location.href = '/';</script>`);
+    } catch (error) {
+        console.error("Error Controller user.controller.js => renderUserPage:", error);  
+        return res.send(`<script>alert("Warning: Incorrect Approach"); window.location.href = '/';</script>`);
     }
 
 };

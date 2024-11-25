@@ -51,6 +51,8 @@
             outline: none;
         }
 
+     
+
         button[type="submit"] {
             background-color: #444;
             color: white;
@@ -406,6 +408,14 @@
         .comment.reply {
             max-width: 600px;
         }
+
+        .report {
+            background-color: #1e1e1e !important;
+            color: #555 !important; 
+            padding-left: 680px !important;
+            font-size: 16px !important;
+        }
+  
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -467,16 +477,20 @@
             </span>
         </div>
         <hr>
-        <ul>
+        <ul>    
+            <!-- Report form -->
+    
+            <button type="button" style="border: none;" class="report" onclick="window.location.href='./problem/report/<%= posts.problemContent.pro_idx %>'">Report</button>
+
+
             <p>
                 <%= posts.problemContent.text %>
             </p><br>
         </ul>
-
+    
         <form method="post" style="margin-top: 20px;">
             <button class="file-download-btn"
-                onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'"
-                type="button">Download File</button>
+                onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'"type="button">Download File</button>
         </form>
 
         <form method="post" style="margin-top: 20px;">
@@ -486,6 +500,8 @@
                 <button type="submit" class="Submit-btn">Submit</button>
             </div>
         </form>
+
+        
     </div>
 
     <!-- level section -->
@@ -608,7 +624,7 @@
                     </div>
                 <% } %>
             <% } %>
-        <% } %> <!--FIX 필요-->
+        <% } %> 
         <% if (posts.countComment > 0) { %> 
             <div class="content">
                 <div class="comments-list">

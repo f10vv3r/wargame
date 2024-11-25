@@ -5,6 +5,6 @@ exports.userLogout = async (req, res) => {
         res.send(`<script>alert("Logout success"); window.location.href = '/';</script>`);
     } catch (err) {
         console.error(err);
-        res.send(`<script>alert("An error occurred. Please try again."); window.location.href = '/';</script>`);
+        res.send(`<script>alert("Logout Fail"); window.location.href = '/';</script>`);
     }
 };

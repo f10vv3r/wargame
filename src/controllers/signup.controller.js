@@ -37,6 +37,6 @@ exports.handleSignup = async (req, res) => {
             return res.send(`<script>alert("The email is already registered."); window.location.href = '/signup';</script>`);
         }
 
-        return res.send(`<script>alert("An error occurred during signup. Please try again."); window.location.href = '/signup';</script>`);
+        return res.send(`<script>alert("Warning: Invalid Approach"); window.location.href = '/signup';</script>`);
     }
 };
