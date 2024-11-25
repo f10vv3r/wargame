@@ -18,7 +18,6 @@ exports.signupUser = async (userData) => {
     const signup_query = 'INSERT INTO users (id, pw, email, class, flag) VALUES (?, ?, ?, 0, NULL);';
 
     try {
-     
         const hashedPassword = md5(userData.pw);
 
         const [results] = await conn.query(signup_query, [userData.id, hashedPassword, userData.email]);

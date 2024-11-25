@@ -18,7 +18,6 @@ router.post("/problem/vote", voteController.vote);
 
 router.post("/problem/comment", commentController.insertComment);
 router.post("/problem/comment/edit", commentController.editComment);
-
 router.get("/problem/comment/delete/:comIdx", commentController.deleteComment);
 
 router.get("/problem/report/:proIdx", reportController.renderReportPage);

@@ -78,3 +78,66 @@ exports.infoCurrentUser = async (id) => {
         throw err;  
     }
 };
+
+exports.infoEditProblem = async (proIdx) => {
+    const user_query = "SELECT * FROM problems WHERE pro_idx = ?;";
+
+    try {
+        const [problem] = await conn.query(user_query, proIdx);
+        return problem;
+    } catch (err) {
+        console.error("Error admin models  => infoUser:", err);
+        throw err;  
+    }
+};
+
+exports.editProblemNotFile = async (ediContent) => {
+    const update_query = "UPDATE problems SET title = ?, text = ?, category = ?, flag = ?, score = ? WHERE pro_idx = ?;";
+    const proIdx = ediContent.proIdx; 
+    const title = ediContent.title; 
+    const text = ediContent.text; 
+    const category = ediContent.category; 
+    const flag = ediContent.flag; 
+    const score = ediContent.score; 
+
+    console.log(ediContent);
+    try {
+        await conn.query(update_query, [title, text, category, flag, score, proIdx]);
+        return 1;
+    } catch (err) {
+        console.error("Error admin models  => editProblemNotFile:", err);
+        throw err;  
+    }
+};
+
+exports.editProblem = async (ediContent) => {
+    const update_query = "UPDATE problems SET title = ?, text = ?, category = ?, flag = ?, score = ?, file = ? WHERE pro_idx = ?;";
+    const proIdx = ediContent.proIdx; 
+    const title = ediContent.title; 
+    const text = ediContent.text; 
+    const category = ediContent.category; 
+    const flag = ediContent.flag; 
+    const score = ediContent.score; 
+    const file = ediContent.fileName; 
+    try {
+        await conn.query(update_query,  [title, text, category, flag, score, file, proIdx]);
+        return 1;
+    } catch (err) {
+        console.error("Error admin models  => editProblem:", err);
+        throw err;  
+    }
+};
+
+
+exports.deleteProblem = async (ediContent) => {
+    const update_query = "DELETE FROM problems WHERE pro_idx = ?;";
+    
+    try {
+        await conn.query(update_query, [ediContent]);
+        return 1;
+    } catch (err) {
+        console.error("Error admin models  => deleteProblem:", err);
+        throw err;  
+    }
+};
+
