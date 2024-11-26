@@ -1,4 +1,5 @@
 const mysql = require("mysql2/promise"); 
+const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 
@@ -27,6 +28,47 @@ exports.infoUser = async (usrData) => {
         throw err;  
     }
 };
+
+exports.usrCount = async () => {
+    const info_query = 'SELECT COUNT(*) AS count FROM users;';
+
+    try {
+        const [usrCountResult] = await conn.query(info_query); 
+        const usrCount = usrCountResult[0].count; 
+        console.log(usrCount);
+        return usrCount; 
+    } catch (err) {
+        console.error("Error Models user.js => infoUser:", err);
+        throw err;  
+    }
+};
+
+exports.infoScore = async () => {
+    const info_query = 'select * from users order by score DESC;';
+
+    try {
+        const [scoreContent] = await conn.query(info_query); 
+
+        return scoreContent; 
+    } catch (err) {
+        console.error("Error Models user.js => infoScore:", err);
+        throw err;  
+    }
+};
+
+exports.modPassword = async (usrData) => {
+    const mod_query = 'UPDATE users SET pw = ? WHERE id = ?;';
+    const newPassword = usrData.newPassword;
+    const currentId = usrData.currentId;
+    try {
+        await conn.query(mod_query, [md5(newPassword), currentId]); 
+        return 1;
+    } catch (err) {
+        console.error("Error Models user.js => modPassowrd:", err);
+        throw err;  
+    }
+};
+
 
 exports.deleteAccount = async (usrData) => {
     const info_query = 'SELECT usr_idx FROM users WHERE id = ?;';
