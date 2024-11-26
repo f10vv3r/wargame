@@ -493,10 +493,12 @@
                 onclick="window.location.href='<%= '../../download/' + posts.problemContent.file %>'"type="button">Download File</button>
         </form>
 
+        <!-- flag form -->
         <form method="post" style="margin-top: 20px;">
             <div class="centered">
                 <input type="text" name="flag" placeholder="Enter flag" required class="small-input">
                 <input type="hidden" name="score" value="<%= posts.problemContent.score %>">
+                <input type="hidden" name="proTitle" value=" <%= posts.problemContent.title %>">
                 <button type="submit" class="Submit-btn">Submit</button>
             </div>
         </form>

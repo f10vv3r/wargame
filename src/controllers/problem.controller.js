@@ -34,21 +34,27 @@ exports.renderProblemPage = async (req, res) => {
 exports.checkFlag = async (req, res) => {
     const flag = req.body.flag;
     const score = req.body.score;
+    const proTitle = req.body.proTitle;
     const page = req.query.page;
-    
+  
     const token = req.cookies.session;
     const verified = jwt.verify(token, SECRET_key);
     const id = verified.id;
+    let status;
+    console.log(req.body);
 
     try {
+        status = "incorrct";
+        const usrIdx = await ProblemModel.whoUsrIdx(id);
         const result = await ProblemModel.resultCheckFlag(page, flag);
-
+       
         if (result) {
-                
+            status = "corrct";
             await ProblemModel.resultInsertFlag(page, score, id);
-
-            return res.send(`<script>alert("Correct flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
+            await ProblemModel.insertFlagLog({page, proTitle, usrIdx, id, flag, status});
+             return res.send(`<script>alert("Correct flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
         } else {
+            await ProblemModel.insertFlagLog({page, proTitle, usrIdx, id, flag, status});
             return res.send(`<script>alert("Incorrect flag"); window.location.href = '/wargame/problem?page=${page}';</script>`);
         }
 

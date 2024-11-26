@@ -38,7 +38,8 @@ exports.renderAdminPage = async (req, res) => {
             const repContent = await AdminModel.infoReport();
             const usrContent = await AdminModel.infoUser();
             const currentUser = await AdminModel.infoCurrentUser(verified.id);
-            
+            const flagLog = await AdminModel.infoFlagLog();
+           
             const repCount = repContent.count;
             const report = repContent.report;
 
@@ -47,9 +48,9 @@ exports.renderAdminPage = async (req, res) => {
             
             const usrCount = usrContent.count;
             const user = usrContent.user;
-
+            console.log(flagLog);
             console.log(verified.id,"| Controller | admin => renderAdminPage | Success");
-            res.render("admin", { 'posts': {problem, proCount, currentUser, report, repCount, user, usrCount} }); 
+            res.render("admin", { 'posts': {problem, proCount, currentUser, report, repCount, user, usrCount, flagLog} }); 
         } else {
             console.log(verified.id,"| Controller | admin => renderAdminPage | Fail");
             res.send(`<script>alert('Warning: You do not have permission to access this page'); window.location.href = '/';</script>`);

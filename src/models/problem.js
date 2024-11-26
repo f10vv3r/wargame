@@ -72,6 +72,18 @@ exports.resultCheckFlag = async (pro_idx, flag) => {
     }
 };
 
+exports.insertFlagLog = async (logData) => {
+    const insert_query = 'INSERT INTO flag_log (pro_idx, pro_title, usr_idx, usr_id, flag, status) VALUES (?, ?, ?, ?, ?, ?);';
+
+    try {
+        await conn.query(insert_query, [logData.page, logData.proTitle, logData.usrIdx, logData.id, logData.flag, logData.status]); 
+        return 1; 
+    } catch (err) {
+        console.error("Error checking flag:", err);
+        throw err;  
+    }
+};
+
 exports.resultInsertFlag = async (pro_idx, score, id) => {
     const fetch_query = `UPDATE users SET flag = ? WHERE id = ?;`;
     const search_query = `SELECT score, flag FROM users WHERE id = ?`;

@@ -79,6 +79,19 @@ exports.infoCurrentUser = async (id) => {
     }
 };
 
+exports.infoFlagLog = async () => {
+    const user_query = "SELECT * FROM flag_log;";
+
+    try {
+        const [flagLog] = await conn.query(user_query);
+        return flagLog; 
+
+    } catch (err) {
+        console.error("Error admin models  => infoFlagLog:", err);
+        throw err;  
+    }
+};
+
 exports.infoEditProblem = async (proIdx) => {
     const user_query = "SELECT * FROM problems WHERE pro_idx = ?;";
 
