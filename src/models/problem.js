@@ -44,20 +44,6 @@ exports.infoComment = async (proData) => {
     }
 };
 
-exports.howManyComment = async (proData) => {
-    const count_query = 'SELECT COUNT(*) AS count FROM comments WHERE pro_idx = ?;';
-
-    try {
-        const [commentCountResult] = await conn.query(count_query, proData); 
-        const comCount = commentCountResult; 
-
-        return comCount; 
-    } catch (err) {
-        console.error("Error Models problem.js howManyComment:", err);
-        throw err;  
-    }
-};
-
 exports.resultCheckFlag = async (pro_idx, flag) => {
     const check_query = `SELECT * FROM problems WHERE pro_idx = ? AND flag = ?;`;
 

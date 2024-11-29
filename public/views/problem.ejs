@@ -472,8 +472,19 @@
         <div class="meta">
             <span class="author">By: <%= posts.writerId.id %></span>
             <span class="date-time">
-                <%= new Date(posts.problemContent.pro_time).toLocaleDateString('ko-KR', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
-                <%= new Date(posts.problemContent.pro_time).toLocaleTimeString('ko-KR', { hour: '2-digit' ,minute: '2-digit' }) %>
+                <%= new Date(posts.problemContent.pro_time).toLocaleDateString('ko-KR', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    timeZone: 'Asia/Seoul' 
+                }) %>
+                
+                <%= new Date(posts.problemContent.pro_time).toLocaleTimeString('ko-KR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    timeZone: 'Asia/Seoul' 
+                }) %>
+                
             </span>
         </div>
         <hr>
@@ -564,10 +575,9 @@
                 </form>
             </div>
         </div>
-      
         <% function renderComments(commentContent, comGroup=0, depth=0) { %>
             <% for (let i=0; i < posts.commentContent.length; i++) { %>
-                <% if (commentContent[i].com_group==comGroup) { %>
+                <% if (commentContent[i].com_group == comGroup) { %>
                     <div class="comment reply" id="comment-<%= posts.commentContent[i].com_idx %>" tabindex="0">
 
                         <span class="author">
@@ -595,8 +605,19 @@
                         </p>
 
                         <span class="time">
-                            <%= new Date(commentContent[i].com_time).toLocaleDateString('ko-KR', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
-                            <%= new Date(commentContent[i].com_time).toLocaleTimeString('ko-KR', { hour: '2-digit' , minute: '2-digit' }) %>
+                            <%= new Date(commentContent[i].com_time).toLocaleDateString('ko-KR', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric', 
+                                timeZone: 'Asia/Seoul' 
+                            }) %>
+                            
+                            <%= new Date(commentContent[i].com_time).toLocaleTimeString('ko-KR', { 
+                                hour: '2-digit', 
+                                minute: '2-digit', 
+                                timeZone: 'Asia/Seoul' 
+                            }) %>
+                            
                         </span>
 
                         <!-- Reply form (initially hidden) -->
@@ -627,7 +648,7 @@
                 <% } %>
             <% } %>
         <% } %> 
-        <% if (posts.countComment > 0) { %> 
+        <% if (posts.commentContent.length > 0) { %> 
             <div class="content">
                 <div class="comments-list">
                     <% renderComments(posts.commentContent, 0, 0); %>

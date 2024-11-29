@@ -30,7 +30,7 @@ exports.deleteAccount = async (req, res) => {
         const token = req.cookies.session;
         const verified = jwt.verify(token, SECRET_key);
         const currentId = verified.id;
-
+        
         await UserModel.deleteAccount(currentId);
 
         res.clearCookie("session", { httpOnly: true, secure: false, sameSite: 'Strict' });

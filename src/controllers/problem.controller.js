@@ -14,15 +14,13 @@ exports.renderProblemPage = async (req, res) => {
 
         const problemContent = await ProblemModel.infoProblem(page);
         const commentContent = await ProblemModel.infoComment(page);
-        const [countCommentResult] = await ProblemModel.howManyComment(page);
         const difficulty = await ProblemModel.checkDifficulty(page);
         const writerId = await ProblemModel.whoUser(problemContent.usr_idx);
         const currentUsrIdx = await ProblemModel.whoUsrIdx(currentUsrId);
-        
-        const countComment = countCommentResult.count;
+    
         console.log(commentContent);
         
-        res.render("problem", { 'posts': { problemContent, writerId, currentUsrId, currentUsrIdx, currentUsrClass, difficulty, commentContent, countComment} });
+        res.render("problem", { 'posts': { problemContent, writerId, currentUsrId, currentUsrIdx, currentUsrClass, difficulty, commentContent}});
 
     } catch (error) {
         console.error("Error Controller problem => renderProblemPage:", error);  
