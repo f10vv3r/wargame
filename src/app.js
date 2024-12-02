@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-require("dotenv").config({ path: __dirname + "/wargame/src/config/.env" });
+require("dotenv").config({ path: __dirname + "/config/.env" }); 
 
 const app = express();
 const port = process.env.PORT;
@@ -18,7 +18,6 @@ const adminRouter = require("./routes/admin.route.js");
 const wargameRouter = require("./routes/wargame.route.js");
 const downloadRouter = require("./routes/download.route.js");
 const errorRouter = require("./routes/error.route.js");
-
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../public/views'));

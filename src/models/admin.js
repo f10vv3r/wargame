@@ -132,6 +132,7 @@ exports.editProblem = async (ediContent) => {
     const flag = ediContent.flag; 
     const score = ediContent.score; 
     const file = ediContent.fileName; 
+    
     try {
         await conn.query(delete_query,  [title, text, category, flag, score, file, proIdx]);
         return 1;
@@ -156,7 +157,6 @@ exports.deleteProblem = async (ediContent) => {
 
 exports.banUser = async (usrIdx) => {
     const delete_query = "DELETE FROM reports WHERE usr_idx = ?;";
-    
     try {
         await conn.query(delete_query, [usrIdx]);
         return 1;

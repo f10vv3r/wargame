@@ -1,5 +1,4 @@
 const mysql = require("mysql2/promise"); 
-const md5 = require('md5');
 
 require("dotenv").config({ path: __dirname + "/config/.env" });
 

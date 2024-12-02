@@ -184,7 +184,7 @@ exports.banUser = async (req, res) => {
         const usrIdx = req.params.usrIdx;
 
         if (verified.class == 1){
-
+            console.log(usrIdx);
             await AdminModel.banUser(usrIdx);
 
             console.log(verified.id,"| Controller | admin => banUser | Success");

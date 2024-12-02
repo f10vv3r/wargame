@@ -1,3 +1,7 @@
 exports.renderIndexPage = (req, res) => {
-    res.render("index");
+    try {
+        res.render("index");
+    } catch(err) {
+        console.error("| Controller | index => renderIndexPage", error); 
+    }
 };
