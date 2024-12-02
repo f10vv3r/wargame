@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const e = require('express');
 
 const SECRET_key = process.env.SECRET_key;
-const GOGGLE_id = process.env.GOGGLE_id;
-const GOGGLE_pw = process.env.GOGGLE_pw;
+const GOOGGLE_id = process.env.GOOGGLE_id;
+const GOOGGLE_pw = process.env.GOOGGLE_pw;
 
 const sendMail = async (mail) => {
     try {
@@ -15,8 +15,8 @@ const sendMail = async (mail) => {
             port: 587,
             secure: false,
             auth: {
-                user: GOGGLE_id,
-                pass: GOGGLE_pw,
+                user: GOOGGLE_id,
+                pass: GOOGGLE_pw,
             },
         });
 

@@ -39,6 +39,18 @@ app.use("/wargame", wargameRouter);
 app.use("/download", downloadRouter);
 app.use("/error", errorRouter);
 
+app.use((req, res, next) => {
+  res.status(404).send("<h1>404 Not Found</h1>");
+});
+
+app.use((req, res, next) => {
+  res.status(500).send("<h1>500 Internal Server Error</h1>");
+}); 
+
+app.use((req, res, next) => {
+  res.status(403).send("<h1>403 Forbidden</h1>");
+});
+
 app.listen(port, (err) => {
   if (err) return console.log(err);
   console.log(`server running success`);

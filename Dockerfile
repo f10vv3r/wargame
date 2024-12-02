@@ -13,6 +13,6 @@ RUN npm install
 COPY nginx.conf ./nginx.conf
 COPY . .
 
-EXPOSE 8000 8000
+EXPOSE 8000
 
 CMD ["node", "src/app.js"]
