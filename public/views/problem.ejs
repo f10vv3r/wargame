@@ -521,7 +521,11 @@
     <% let level=posts.difficulty %>
         <div class="content difficulty-vote-section">
             <h2>Level : <span id="level-display">
+                <% if (level > 10) {%>
+                    10
+                <% } else { %> 
                     <%= level %>
+                <% } %>
                 </span></h2>
 
             <form method="post" action="./problem/vote">
@@ -545,7 +549,7 @@
         <script>
             let voteLevel = 0;
             const selectedLevel = document.getElementById('selected-level');
-            const difficultyInput = document.getElementById('difficulty');  // hidden input
+            const difficultyInput = document.getElementById('difficulty');  
 
             document.getElementById('minus').addEventListener('click', () => {
                 voteLevel = Math.max(0, voteLevel - 1);
